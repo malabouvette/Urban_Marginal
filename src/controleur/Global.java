@@ -11,15 +11,15 @@ package controleur;
 public interface Global {
 	
 	/**
-	 * N° du port d'écoute du serveur
+	 * NÂ° du port d'Ã©coute du serveur
 	 */
 	int PORT = 6666;
 	/**
-	 * Nombre de personnages différents
+	 * Nombre de personnages diffÃ©rents
 	 */
 	int NBPERSOS = 3;
 	/**
-	 * Caractère de séparation dans un chemin de fichiers
+	 * CaractÃ¨re de sÃ©paration dans un chemin de fichiers
 	 */
 	String CHEMINSEPARATOR = "/";
 	/**
@@ -55,7 +55,7 @@ public interface Global {
 	 */
 	String EXTFICHIERPERSO = ".gif";
 	/**
-	 * Début du nom des images des personnages
+	 * DÃ©but du nom des images des personnages
 	 */
 	String PERSO = "perso";
 	/**
@@ -67,39 +67,39 @@ public interface Global {
 	 */
 	String MUR = CHEMINMURS+"mur.gif";
 	/**
-	 * état marche du personnage
+	 * Ã©tat marche du personnage
 	 */
 	String MARCHE = "marche";
 	/**
-	 * état touché du personnage
+	 * Ã©tat touchÃ© du personnage
 	 */
 	String TOUCHE = "touche";
 	/**
-	 * état mort du personnage
+	 * Ã©tat mort du personnage
 	 */
 	String MORT = "mort";
 	/**
-	 * Caractère de séparation dans les chaines transférées
+	 * CaractÃ¨re de sÃ©paration dans les chaines transfÃ©rÃ©es
 	 */
 	String STRINGSEPARE = "~";
 	/**
-	 * Message "connexion" envoyé par la classe Connection
+	 * Message "connexion" envoyÃ© par la classe Connection
 	 */
 	String CONNEXION = "connexion";
 	/**
-	 * Message "réception" envoyé par la classe Connection
+	 * Message "rÃ©ception" envoyÃ© par la classe Connection
 	 */
-	String RECEPTION = "réception";
+	String RECEPTION = "rÃ©ception";
 	/**
-	 * Message "déconnexion" envoyé par la classe Connection
+	 * Message "dÃ©connexion" envoyÃ© par la classe Connection
 	 */
-	String DECONNEXION = "déconnexion";
+	String DECONNEXION = "dÃ©connexion";
 	/**
-	 * Message "pseudo" envoyé pour la création d'un joueur
+	 * Message "pseudo" envoyÃ© pour la crÃ©ation d'un joueur
 	 */
 	String PSEUDO = "pseudo";
 	/**
-	 * vie de départ pour tous les joueurs
+	 * vie de dÃ©part pour tous les joueurs
 	 */
 	int MAXVIE = 10 ;
 	/**
@@ -110,5 +110,33 @@ public interface Global {
 	 * perte de points de vie lors d'une attaque
 	 */
 	int PERTE = 2 ; 
-
+	/**
+	 * hauteur du mur
+	 */
+	int HAUTEUR_MUR = 35 ;
+	/**
+	 * largeur du mur
+	 */
+	int LARGEUR_MUR = 34 ;
+	/**
+	 * hauteur fenÃªtre Arene (sans le tchat)
+	 */
+	int HAUTEUR_ARENE = 550 ;
+	/**
+	 * largeur arÃ¨ne
+	 */
+	int LARGEUR_ARENE = 740 ;
+	/**
+	 * nombre de murs
+	 */
+	int NB_MURS = 20 ;
+	/**
+	 * ordre pour ajouter un mur dans l'arene du serveur
+	 */
+	String AJOUT_MUR = "ajout mur" ;
+	/**
+	 * ordre pour ajouter le panel mur dans l'arÃ¨ne du client 
+	 */
+	String AJOUT_PANEL_MUR = "ajout panel murs" ;
 }
+

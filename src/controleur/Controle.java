@@ -1,8 +1,11 @@
 package controleur;
 
+import javax.swing.JPanel;
+
 import modele.Jeu;
 import modele.JeuClient;
 import modele.JeuServeur;
+import modele.Objet;
 import outils.connexion.AsyncResponse;
 import outils.connexion.ClientSocket;
 import outils.connexion.Connection;
@@ -12,7 +15,7 @@ import vue.ChoixJoueur;
 import vue.EntreeJeu;
 
 /**
- * ContrÙleur et point d'entrÈe de l'applicaton 
+ * Contr√¥leur et point d'entr√©e de l'applicaton 
  * @author emds
  *
  */
@@ -36,8 +39,8 @@ public class Controle implements AsyncResponse, Global {
 	private Jeu leJeu;
 
 	/**
-	 * MÈthode de dÈmarrage
-	 * @param args non utilisÈ
+	 * M√©thode de d√©marrage
+	 * @param args non utilis√©
 	 */
 	public static void main(String[] args) {
 		new Controle();
@@ -53,7 +56,7 @@ public class Controle implements AsyncResponse, Global {
 	
 	/**
 	 * Demande provenant de la vue EntreeJeu
-	 * @param info information ‡ traiter
+	 * @param info information √† traiter
 	 */
 	public void evenementEntreeJeu(String info) {
 		if(info.equals("serveur")) {
@@ -61,6 +64,7 @@ public class Controle implements AsyncResponse, Global {
 			this.leJeu = new JeuServeur(this);
 			this.frmEntreeJeu.dispose();
 			this.frmArene = new Arene();
+			((JeuServeur)leJeu).constructionMurs();
 			this.frmArene.setVisible(true);
 		} else {
 			new ClientSocket(this, info, PORT);
@@ -70,7 +74,7 @@ public class Controle implements AsyncResponse, Global {
 	/**
 	 * Informations provenant de la vue ChoixJoueur
 	 * @param pseudo le pseudo du joueur
-	 * @param numPerso le numÈro du personnage choisi par le joueur
+	 * @param numPerso le num√©ro du personnage choisi par le joueur
 	 */
 	public void evenementChoixJoueur(String pseudo, int numPerso) {
 		this.frmChoixJoueur.dispose();
@@ -81,7 +85,7 @@ public class Controle implements AsyncResponse, Global {
 	/**
 	 * Envoi d'informations vers l'ordinateur distant
 	 * @param connection objet de connexion pour l'envoi vers l'ordinateur distant
-	 * @param info information ‡ envoyer
+	 * @param info information √† envoyer
 	 */
 	public void envoi(Connection connection, Object info) {
 		connection.envoi(info);
@@ -109,6 +113,31 @@ public class Controle implements AsyncResponse, Global {
 			break;
 		}
 		
+	}
+	/**
+	 * m√©thode ev√®nement Jeu serveur
+	 * @param ordre 
+	 * @param info
+	 */
+	public void evenementJeuServeur( String ordre, Object info) {
+		switch (ordre) {
+		case AJOUT_MUR :
+			frmArene.ajoutMurs(info);
+			break;
+		case AJOUT_PANEL_MUR :
+			//System.out.println(ordre);
+			leJeu.envoi((Connection)info, frmArene.getJpnMurs());
+			break;
+		}
+	}
+
+	public void evenementJeuClient(String ordre, Object info) {
+		// TODO Auto-generated method stub
+		switch (ordre) {
+		case AJOUT_PANEL_MUR :
+			frmArene.setJpnMurs((JPanel)info);
+			break;
+		}
 	}
 
 }

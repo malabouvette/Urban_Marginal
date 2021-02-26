@@ -13,7 +13,7 @@ public class Joueur extends Objet implements Global {
 	 */
 	private String pseudo ;
 	/**
-	 * n° correspondant au personnage (avatar) pour le fichier correspondant
+	 * nÂ° correspondant au personnage (avatar) pour le fichier correspondant
 	 */
 	private int numPerso ; 
 	/**
@@ -21,7 +21,7 @@ public class Joueur extends Objet implements Global {
 	 */
 	private JeuServeur jeuServeur ;
 	/**
-	 * numéro d'étape dans l'animation (de la marche, touché ou mort)
+	 * numÃ©ro d'Ã©tape dans l'animation (de la marche, touchÃ© ou mort)
 	 */
 	private int etape ;
 	/**
@@ -33,7 +33,7 @@ public class Joueur extends Objet implements Global {
 	 */
 	private int vie ; 
 	/**
-	 * tourné vers la gauche (0) ou vers la droite (1)
+	 * tournÃ© vers la gauche (0) ou vers la droite (1)
 	 */
 	private int orientation ;
 	
@@ -44,18 +44,18 @@ public class Joueur extends Objet implements Global {
 	}
 
 	/**
-	 * Initialisation d'un joueur (pseudo et numéro, calcul de la 1ère position, affichage, création de la boule)
-	 * @param numPerso numéro du personnage
+	 * Initialisation d'un joueur (pseudo et numÃ©ro, calcul de la 1Ã¨re position, affichage, crÃ©ation de la boule)
+	 * @param numPerso numÃ©ro du personnage
 	 * @param pseudo pseudo du joueur
 	 */
 	public void initPerso(String pseudo, int numPerso) {
 		this.pseudo = pseudo;
 		this.numPerso = numPerso;
-		System.out.println("joueur "+pseudo+" - num perso "+numPerso+" créé");
+		System.out.println("joueur "+pseudo+" - num perso "+numPerso+" crÃ©Ã©");
 	}
 
 	/**
-	 * Calcul de la première position aléatoire du joueur (sans chevaucher un autre joueur ou un mur)
+	 * Calcul de la premiÃ¨re position alÃ©atoire du joueur (sans chevaucher un autre joueur ou un mur)
 	 */
 	private void premierePosition() {
 	}
@@ -67,19 +67,19 @@ public class Joueur extends Objet implements Global {
 	}
 
 	/**
-	 * Gère une action reçue et qu'il faut afficher (déplacement, tire de boule...)
+	 * GÃ¨re une action revue et qu'il faut afficher (dÃ©placement, tire de boule...)
 	 */
 	public void action() {
 	}
 
 	/**
-	 * Gère le déplacement du personnage
+	 * GÃ¨re le dÃ©placement du personnage
 	 */
 	private void deplace() { 
 	}
 
 	/**
-	 * Contrôle si le joueur touche un des autres joueurs
+	 * ContrÃ´le si le joueur touche un des autres joueurs
 	 * @return true si deux joueurs se touchent
 	 */
 	private Boolean toucheJoueur() {
@@ -87,7 +87,7 @@ public class Joueur extends Objet implements Global {
 	}
 
 	/**
-	* Contrôle si le joueur touche un des murs
+	* ContrÃ´le si le joueur touche un des murs
 	 * @return true si un joueur touche un mur
 	 */
 	private Boolean toucheMur() {
@@ -95,19 +95,19 @@ public class Joueur extends Objet implements Global {
 	}
 	
 	/**
-	 * Gain de points de vie après avoir touché un joueur
+	 * Gain de points de vie aprÃ¨s avoir touchÃ© un joueur
 	 */
 	public void gainVie() {
 	}
 	
 	/**
-	 * Perte de points de vie après avoir été touché 
+	 * Perte de points de vie aprÃ¨s avoir Ã©tÃ© touchÃ© 
 	 */
 	public void perteVie() {
 	}
 	
 	/**
-	 * vrai si la vie est à 0
+	 * vrai si la vie est Ã  0
 	 * @return true si vie = 0
 	 */
 	public Boolean estMort() {
@@ -115,7 +115,7 @@ public class Joueur extends Objet implements Global {
 	}
 	
 	/**
-	 * Le joueur se déconnecte et disparait
+	 * Le joueur se dÃ©connecte et disparait
 	 */
 	public void departJoueur() {
 	}

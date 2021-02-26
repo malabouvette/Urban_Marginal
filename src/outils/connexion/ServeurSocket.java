@@ -5,7 +5,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
- * Gestion d'un serveur : création d'une connexion de type serveur pour attendre les connexions de clients
+ * Gestion d'un serveur : crÃ©ation d'une connexion de type serveur pour attendre les connexions de clients
  * @author emds
  *
  */
@@ -16,36 +16,36 @@ public class ServeurSocket extends Thread {
 	 */
 	private ServerSocket serverSocket ; 
 	/**
-	 * objet de lien avec une autre classe qui implémente AsyncResponse pour transférer les réponses
+	 * objet de lien avec une autre classe qui implÃ©mente AsyncResponse pour transfÃ©rer les rÃ©ponses
 	 */
 	private AsyncResponse delegate=null; 
 	
 	/**
 	 * Constructeur
-	 * @param delegate instance de la classe vers laquelle il faut transférer les réponses
-	 * @param port numéro port d'écoute du serveur
+	 * @param delegate instance de la classe vers laquelle il faut transfÃ©rer les rÃ©ponses
+	 * @param port numÃ©ro port d'Ã©coute du serveur
 	 */
 	public ServeurSocket(AsyncResponse delegate, int port) {
-		// création du socket serveur d'écoute des clients
+		// crÃ©ation du socket serveur d'ï¿½coute des clients
 		try {
 			this.delegate = delegate;
 			this.serverSocket = new ServerSocket(port);
-			// le démarrage de l'écoute ne peut se faire que si un objet delegate existe (pour récupérer la réponse)
+			// le dÃ©marrage de l'Ã©coute ne peut se faire que si un objet delegate existe (pour rÃ©cupÃ©rer la rÃ©ponse)
 			if(delegate != null) {
 				this.start();		
 			}
 		} catch (IOException e) {
-			// problème grave qui ne devrait pas se produire : arrêt du programme
-			System.out.println("erreur grave création socket serveur : "+e);
+			// problÃ¨me grave qui ne devrait pas se produire : arrÃªt du programme
+			System.out.println("erreur grave crÃ©ation socket serveur : "+e);
 			System.exit(0);
 		}
 	}
 	
 	/**
-	 * Méthode thread qui va attendre la connexion d'un client
+	 * MÃ©thode thread qui va attendre la connexion d'un client
 	 */
 	public void run() {
-		// objet qui va récupérer le socket du client qui s'est connecté
+		// objet qui va rÃ©cupÃ©rer le socket du client qui s'est connectÃ©
 		Socket socket ;
 		// boucle infinie pour attendre un nouveau client
 		while (true) {
@@ -53,11 +53,11 @@ public class ServeurSocket extends Thread {
 				// attente d'une connexion
 				System.out.println("le serveur attend");
 				socket = serverSocket.accept();
-				System.out.println("un client s'est connecté");
-				// création d'une connexion vers ce client, pour la communication (envoi et réception d'informations)
+				System.out.println("un client s'est connectÃ©");
+				// crÃ©ation d'une connexion vers ce client, pour la communication (envoi et rÃ©ception d'informations)
 				new Connection(socket, delegate);
 			} catch (IOException e) {
-				// problème grave qui ne devrait pas se produire : arrêt du programme
+				// problÃ¨me grave qui ne devrait pas se produire : arrÃªt du programme
 				System.out.println("erreur sur l'objet serverSocket : "+e);
 				System.exit(0);
 			}
