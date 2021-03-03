@@ -3,6 +3,8 @@ package modele;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Set;
 
 import javax.swing.JLabel;
 
@@ -50,6 +52,12 @@ public class JeuServeur extends Jeu implements Global {
 			String pseudo = infos[1];
 			int numPerso = Integer.parseInt(infos[2]);
 			this.lesJoueurs.get(connection).initPerso(pseudo, numPerso, lesJoueurs.values(), lesMurs);
+			controle.evenementJeuServeur(AJOUT_PHRASE, ETOILES+ pseudo + ARRIVE + ETOILES );
+			break;
+		case TCHAT :
+			String phrase = infos[1];
+			phrase = this.lesJoueurs.get(connection).getPseudo()+ FLECHE + phrase ;
+			this.controle.evenementJeuServeur(AJOUT_PHRASE, phrase);
 			break;
 		}
 	}
@@ -62,7 +70,11 @@ public class JeuServeur extends Jeu implements Global {
 	 * Envoi d'une information vers tous les clients
 	 * fais appel plusieurs fois à l'envoi de la classe Jeu
 	 */
-	public void envoi() {
+	public void envoi(Object info) {
+		for(Connection connection : this.lesJoueurs.keySet()) {
+			super.envoi(connection, info);			
+		}
+		
 	}
 
 	/**
@@ -82,7 +94,7 @@ public class JeuServeur extends Jeu implements Global {
 	 * return 
 	 */
 	public void ajoutLabelJeuArene(JLabel jLabel) {
-		controle.evenementJeuServeur(AJOUT_LBLJEU, jLabel);;
+		controle.evenementJeuServeur(AJOUT_LBLJEU, jLabel);
 	}
 	
 	/**
@@ -92,10 +104,10 @@ public class JeuServeur extends Jeu implements Global {
 	public void envoiJeuATous() {
 		Collection <Connection> lesConnections = this.lesJoueurs.keySet();
 		for (Connection connection : lesConnections) {
-			this.controle.evenementJeuServeur(AJOUT_PNLJEU, connection
-					);
+			this.controle.evenementJeuServeur(AJOUT_PNLJEU, connection);
 
 		}
 	}
 }
+
 

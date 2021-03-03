@@ -1,12 +1,14 @@
 package controleur;
 
 import javax.swing.JLabel;
+
 import java.util.Collection;
 import javax.swing.JPanel;
 
 import modele.Jeu;
 import modele.JeuClient;
 import modele.JeuServeur;
+import modele.Joueur;
 import modele.Objet;
 import outils.connexion.AsyncResponse;
 import outils.connexion.ClientSocket;
@@ -39,7 +41,7 @@ public class Controle implements AsyncResponse, Global {
 	 * instance du jeu (JeuServeur ou JeuClient)
 	 */
 	private Jeu leJeu;
-
+	
 	/**
 	 * Méthode de démarrage
 	 * @param args non utilisé
@@ -61,11 +63,11 @@ public class Controle implements AsyncResponse, Global {
 	 * @param info information à traiter
 	 */
 	public void evenementEntreeJeu(String info) {
-		if(info.equals("serveur")) {
+		if(info.equals(SERVEUR)) {
 			new ServeurSocket(this, PORT);
 			this.leJeu = new JeuServeur(this);
 			this.frmEntreeJeu.dispose();
-			this.frmArene = new Arene();
+			this.frmArene = new Arene(this, SERVEUR);
 			((JeuServeur)leJeu).constructionMurs();
 			this.frmArene.setVisible(true);
 		} else {
@@ -101,7 +103,7 @@ public class Controle implements AsyncResponse, Global {
 				this.leJeu = new JeuClient(this);
 				this.leJeu.connexion(connection);
 				this.frmEntreeJeu.dispose();
-				this.frmArene = new Arene();
+				this.frmArene = new Arene(this, CLIENT);
 				this.frmChoixJoueur = new ChoixJoueur(this);
 				this.frmChoixJoueur.setVisible(true);
 			} else {
@@ -111,6 +113,7 @@ public class Controle implements AsyncResponse, Global {
 		case RECEPTION :
 			this.leJeu.reception(connection, info);
 			break;
+	
 		case DECONNEXION :
 			break;
 		}
@@ -135,6 +138,11 @@ public class Controle implements AsyncResponse, Global {
 		case AJOUT_PNLJEU :
 			leJeu.envoi((Connection)info, frmArene.getJpnJeu());
 			break;
+		case AJOUT_PHRASE :
+			this.frmArene.ajoutChat((String)info);
+			((JeuServeur)leJeu).envoi(frmArene.getTxtChat());
+			break;
+			
 		}
 	}
 
@@ -152,7 +160,20 @@ public class Controle implements AsyncResponse, Global {
 		case AJOUT_PNLJEU :
 			frmArene.setJpnJeu((JPanel)info);
 			break;
+		case MODIF_TCHAT :
+			frmArene.setTxtChat((String)info);
+			break;
 		}
 	}
 
+	/**
+	 * méthode évènement arène
+	 * 
+	 */
+	
+	public void evenementArene(String info) {
+		((JeuClient)this.leJeu).envoi(TCHAT+STRINGSEPARE+info);
+
+	}
 }
+

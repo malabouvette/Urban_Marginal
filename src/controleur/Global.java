@@ -179,7 +179,44 @@ public interface Global {
 	 * ordre pour ajouter le panel mur dans l'arène du client
 	 */
 	String AJOUT_PNLJEU = "ajout panel jeu" ;
-}
+	/**
+	 * ordre pour ajouter texte Saisie dans text tchat
+	 */
+	String AJOUT_TEXTCHAT = "ajout text chat" ;
+	/**
+	 * ordre pour ajouter un message dans le tchat 
+	 */
+	String TCHAT = "tchat" ;
+	/**
+	 * séparateur dans tchat entre pseudo et message
+	 */
+	String FLECHE = ">" ;
+	/**
+	 * ordre pour ajouter une phrase dans le chat
+	 */
+	String AJOUT_PHRASE = "ajout phrase" ;
+	/**
+	 * odre de modifier le tchat
+	 */
+	String MODIF_TCHAT = "modif tchat" ;
+	/**
+	 * type de jeu client
+	 */
+	String CLIENT = "client";
+	/**
+	 * type de jeu serveur
+	 */
+	String SERVEUR = "serveur";
+	/**
+	 * information à faire apparaitre dans le chat arrivé nouveau joueur
+	 */
+	String ARRIVE = " vient de se connecter ";
+	/**
+	 * étoile encadrant nouveau message arrivé
+	 */
+	String ETOILES = "***" ;
+	}	
+
 
 
 

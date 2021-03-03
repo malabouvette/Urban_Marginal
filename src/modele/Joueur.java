@@ -11,6 +11,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import controleur.Global;
+import outils.connexion.Connection;
 
 /**
  * Gestion des joueurs
@@ -63,6 +64,13 @@ public class Joueur extends Objet implements Global {
 	 * collection de Joueur
 	 */
 	private Collection <Joueur> lesJoueurs ;
+	/**
+	 * getter le pseudo du joueur
+	 * @return pseudo
+	 */
+	public String getPseudo() {
+		return this.pseudo;
+	}
 	
 	
 	/**
