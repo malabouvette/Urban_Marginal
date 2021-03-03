@@ -11,6 +11,10 @@ import javax.swing.JLabel;
  *
  */
 public class Mur extends Objet implements Global {
+	
+	private int largeur = LARGEUR_MUR ;
+	private int hauteur = HAUTEUR_MUR ;
+	
 
 	/**
 	 * Constructeur
@@ -25,7 +29,8 @@ public class Mur extends Objet implements Global {
 	super.jLabel.setBounds(posX, posY, LARGEUR_MUR, HAUTEUR_MUR);
 	
 	}
+
 	
 	
-	
+
 }

@@ -1,5 +1,7 @@
 package controleur;
 
+import javax.swing.JLabel;
+import java.util.Collection;
 import javax.swing.JPanel;
 
 import modele.Jeu;
@@ -125,17 +127,30 @@ public class Controle implements AsyncResponse, Global {
 			frmArene.ajoutMurs(info);
 			break;
 		case AJOUT_PANEL_MUR :
-			//System.out.println(ordre);
 			leJeu.envoi((Connection)info, frmArene.getJpnMurs());
+			break;
+		case AJOUT_LBLJEU :
+			frmArene.ajoutLabelJeu((JLabel)info);
+			break;
+		case AJOUT_PNLJEU :
+			leJeu.envoi((Connection)info, frmArene.getJpnJeu());
 			break;
 		}
 	}
 
+	/**
+	 * méthode evènement Jeu Client
+	 * @param ordre 
+	 * @param info
+	 */
 	public void evenementJeuClient(String ordre, Object info) {
 		// TODO Auto-generated method stub
 		switch (ordre) {
 		case AJOUT_PANEL_MUR :
 			frmArene.setJpnMurs((JPanel)info);
+			break;
+		case AJOUT_PNLJEU :
+			frmArene.setJpnJeu((JPanel)info);
 			break;
 		}
 	}

@@ -1,7 +1,10 @@
 package modele;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Hashtable;
+
+import javax.swing.JLabel;
 
 import controleur.Controle;
 import controleur.Global;
@@ -12,6 +15,7 @@ import outils.connexion.Connection;
  *
  */
 public class JeuServeur extends Jeu implements Global {
+
 
 
 	/**
@@ -33,7 +37,7 @@ public class JeuServeur extends Jeu implements Global {
 	
 	@Override
 	public void connexion(Connection connection) {
-		this.lesJoueurs.put(connection, new Joueur());
+		this.lesJoueurs.put(connection, new Joueur(this));
 	}
 
 	@Override
@@ -45,7 +49,7 @@ public class JeuServeur extends Jeu implements Global {
 			controle.evenementJeuServeur(AJOUT_PANEL_MUR, connection);
 			String pseudo = infos[1];
 			int numPerso = Integer.parseInt(infos[2]);
-			this.lesJoueurs.get(connection).initPerso(pseudo, numPerso);
+			this.lesJoueurs.get(connection).initPerso(pseudo, numPerso, lesJoueurs.values(), lesMurs);
 			break;
 		}
 	}
@@ -72,4 +76,26 @@ public class JeuServeur extends Jeu implements Global {
 			
 	}
 	
+	/** 
+	 * ajout du label jeu dans arène par l'intermaédiaire du controleur
+	 * @param JLAbel labelJeu
+	 * return 
+	 */
+	public void ajoutLabelJeuArene(JLabel jLabel) {
+		controle.evenementJeuServeur(AJOUT_LBLJEU, jLabel);;
+	}
+	
+	/**
+	 * ajout du panel jeu sur les arene de tous les jeuclients
+	 * 
+	 */
+	public void envoiJeuATous() {
+		Collection <Connection> lesConnections = this.lesJoueurs.keySet();
+		for (Connection connection : lesConnections) {
+			this.controle.evenementJeuServeur(AJOUT_PNLJEU, connection
+					);
+
+		}
+	}
 }
+

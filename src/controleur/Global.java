@@ -34,6 +34,11 @@ public interface Global {
 	 * Chemin du dossier de l'image du mur
 	 */
 	String CHEMINMURS = "murs"+CHEMINSEPARATOR;
+	/** 
+	 * Début du nom des images des personnages
+	 */
+	String PERSO = "perso";
+	/**
 	/**
 	 * Chemin du dossier des images des personnages
 	 */
@@ -54,10 +59,6 @@ public interface Global {
 	 * Extension des fichiers des images des personnages
 	 */
 	String EXTFICHIERPERSO = ".gif";
-	/**
-	 * Début du nom des images des personnages
-	 */
-	String PERSO = "perso";
 	/**
 	 * Chemin de l'image de la boule
 	 */
@@ -82,6 +83,10 @@ public interface Global {
 	 * Caractère de séparation dans les chaines transférées
 	 */
 	String STRINGSEPARE = "~";
+	/**
+	 * orientation du personnage
+	 */
+	String DIRECTION = "d" ;
 	/**
 	 * Message "connexion" envoyé par la classe Connection
 	 */
@@ -111,6 +116,18 @@ public interface Global {
 	 */
 	int PERTE = 2 ; 
 	/**
+	 * largeur du joueur (label)
+	 */
+	int LARGEURPERSO= 35;
+	/**
+	 * hauteur du joueur (label)
+	 */
+	int HAUTEURPERSO = 35;
+	/**
+	 * hauteur du message accompagnant le joueur
+	 */
+	int HAUTEUR_LBLMESSAGE = 8;
+	/**
 	 * hauteur du mur
 	 */
 	int HAUTEUR_MUR = 35 ;
@@ -138,5 +155,31 @@ public interface Global {
 	 * ordre pour ajouter le panel mur dans l'arène du client 
 	 */
 	String AJOUT_PANEL_MUR = "ajout panel murs" ;
+	/**
+	 * axe des ordonnées
+	 */
+	String X = "x" ;
+	/**
+	 * axe des abscices
+	 */
+	String Y = "y" ;
+	/**
+	 * position X début des pavés
+	 */
+	int POSX_PAVES = 25 ;
+	/**
+	 ** position Y début des pavés
+	 */
+	int POSY_PAVES = 30 ;
+	/**
+	 * ordre pour ajouter le label jeu dans l'arene du serveur
+	 */
+	String AJOUT_LBLJEU = "ajout jlabel jeu";
+	/**
+	 * ordre pour ajouter le panel mur dans l'arène du client
+	 */
+	String AJOUT_PNLJEU = "ajout panel jeu" ;
 }
+
+
 

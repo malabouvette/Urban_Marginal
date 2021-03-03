@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import controleur.Controle;
+import java.awt.Font;
 
 /**
  * Frame de l'entrée dans le jeu (choix entre serveur et client)
@@ -65,6 +66,7 @@ public class EntreeJeu extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblStartAServer = new JLabel("Start a server :");
+		lblStartAServer.setFont(new Font("Dialog", Font.PLAIN, 13));
 		lblStartAServer.setBounds(10, 11, 94, 14);
 		contentPane.add(lblStartAServer);
 		

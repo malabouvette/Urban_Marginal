@@ -1,10 +1,11 @@
 package modele;
+import controleur.Global;
 
 /**
  * Gestion de la boule
  *
  */
-public class Boule extends Objet {
+public class Boule extends Objet implements Global{
 
 	/**
 	 * instance de JeuServeur pour la communication
@@ -22,5 +23,9 @@ public class Boule extends Objet {
 	 */
 	public void tireBoule() {
 	}
+
+
+
+
 	
 }

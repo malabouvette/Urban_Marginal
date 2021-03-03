@@ -39,6 +39,11 @@ public class Arene extends JFrame implements Global {
 	private JPanel jpnMurs ;
 	
 	/**
+	 * Zone d'affichage des personnages
+	 */
+	private JPanel jpnJeu ;
+	/**
+	 * getter panel mur
 	 *@return
 	 */
 	public JPanel getJpnMurs() {
@@ -46,7 +51,7 @@ public class Arene extends JFrame implements Global {
 	}
 	
 	/**
-	 *setter
+	 *setter panel mur
 	 *@param jpnMurs
 	 */
 	public void setJpnMurs(JPanel info) {
@@ -54,6 +59,23 @@ public class Arene extends JFrame implements Global {
 		info.repaint();
 	}
 		
+	/**
+	 * getter panel Jeu
+	 *@return
+	 */
+	public JPanel getJpnJeu() {
+		return jpnJeu ;
+	}
+	
+	/**
+	 *setter panel mur
+	 *@param jpnMurs
+	 */
+	public void setJpnJeu(JPanel info) {
+		this.jpnJeu.removeAll();
+		this.jpnJeu.add(info);
+		info.repaint();
+	}
 
 	/**
 	 * Ajout Murs
@@ -61,6 +83,14 @@ public class Arene extends JFrame implements Global {
 	public void ajoutMurs (Object unMur) {
 		jpnMurs.add((JLabel)unMur);
 		jpnMurs.repaint();
+	}
+	
+	/**
+	 * Ajout Label Jeu
+	 */
+	public void ajoutLabelJeu (JLabel lblJeu) {
+		jpnJeu.add(lblJeu);
+		jpnJeu.repaint();
 	}
 	
 	/**
@@ -80,8 +110,15 @@ public class Arene extends JFrame implements Global {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		jpnJeu = new JPanel();
+		jpnJeu.setBounds(POSX_PAVES, POSY_PAVES, LARGEUR_ARENE, HAUTEUR_ARENE);
+		jpnJeu.setLayout(null);
+		contentPane.add(jpnJeu);
+		jpnJeu.setOpaque(false);
+		
+		
 		jpnMurs = new JPanel();
-		jpnMurs.setBounds(25, 30, LARGEUR_ARENE, HAUTEUR_ARENE);
+		jpnMurs.setBounds(POSX_PAVES,POSY_PAVES, LARGEUR_ARENE, HAUTEUR_ARENE);
 		jpnMurs.setLayout(null);
 		contentPane.add(jpnMurs);
 		jpnMurs.setOpaque(false);
