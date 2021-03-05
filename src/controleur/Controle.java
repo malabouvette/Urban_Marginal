@@ -174,6 +174,7 @@ public class Controle implements AsyncResponse, Global {
 	public void evenementArene(Object info) {
 		if (info instanceof String) {
 			((JeuClient)this.leJeu).envoi(TCHAT+STRINGSEPARE+info);
+			// envoie d'un touche actionnée
 		}else if (info instanceof Integer) {
 			((JeuClient)this.leJeu).envoi(ACTION+STRINGSEPARE+info);
 		}

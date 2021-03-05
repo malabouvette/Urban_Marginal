@@ -27,7 +27,15 @@ public class JeuServeur extends Jeu implements Global {
 	/**
 	 * Dictionnaire de joueurs indexé sur leur objet de connexion
 	 */
-	private Hashtable<Connection, Joueur> lesJoueurs = new Hashtable<Connection, Joueur>() ;
+	private Hashtable<Connection, Joueur > lesJoueurs = new Hashtable<Connection, Joueur>() ;
+	/**
+	 * @return
+	 * collection joueurs
+	 */
+	public Collection <Joueur> getlesJoueur() {
+		return lesJoueurs.values();
+	}
+	
 	
 	/**
 	 * Constructeur

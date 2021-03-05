@@ -10,6 +10,7 @@ import java.util.Random;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 import controleur.Global;
 import outils.connexion.Connection;
@@ -50,11 +51,16 @@ public class Joueur extends Objet implements Global {
 	 */
 	private int orientation ;
 	/**
+	 * JLabel boule
+	 * contient la boule du personnage
+	 */
+	private JLabel lblBoule;
+	/**
 	 * JLabel message perso
 	 * contient pseudo et vie perso
 	 * affiché en dessous du perso
 	 */
-	private JLabel lblMessage;
+	private JLabel message;
 	
 	/**
 	 * collection de murs
@@ -71,6 +77,18 @@ public class Joueur extends Objet implements Global {
 	 */
 	public String getPseudo() {
 		return this.pseudo;
+	}
+	/**
+	 * @return orientation
+	 */
+	public int getOrientation() {
+		return this.orientation ;	
+	}
+	/**
+	 * @return vie
+	 */
+	public int getVie() {
+		return this.vie ;	
 	}
 	
 	
@@ -93,28 +111,26 @@ public class Joueur extends Objet implements Global {
 	public void initPerso(String pseudo, int numPerso, Collection lesJoueurs, Collection lesMurs) {
 		this.pseudo = pseudo;
 		this.numPerso = numPerso;
-		//System.out.println("joueur "+pseudo+" - num perso "+numPerso+" créé");
-		
-	
-		 super.jLabel = new JLabel();
-		
+		System.out.println("joueur "+pseudo+" - num perso "+numPerso+" créé");
+		//création du label du personnage
+		super.jLabel = new JLabel();
+		//création du label du personnage
+		this.message = new JLabel();
+		message.setHorizontalAlignment(SwingConstants.CENTER);
+		message.setFont(new Font("Dialog", Font.PLAIN, 8));
+		// création de la boule du personnage
+		this.boule = new Boule(this.jeuServeur);
 		// appel première position
 		premierePosition(lesJoueurs, lesMurs);
-		
-		lblMessage = new JLabel(pseudo +" : "+ vie , JLabel.CENTER);
-		lblMessage.setBounds(this.posX - 10, this.posY - HAUTEUR_LBLMESSAGE, LARGEURPERSO + 10, HAUTEUR_LBLMESSAGE);
-		lblMessage.setFont(new Font("Dialog", Font.PLAIN, 8));
-		lblMessage.setVisible(true);
-		
-		
-		
-		// appel de l'insertion du label joueur (objets)
-		jeuServeur.ajoutLabelJeuArene(jLabel);
-		// appel de l'insertion du label message
-		jeuServeur.ajoutLabelJeuArene(lblMessage);
+		// demande d'ajout du label du personnage, du message et de la boule dans l'arène du serveur
+		this.jeuServeur.ajoutLabelJeuArene(jLabel);
+		this.jeuServeur.ajoutLabelJeuArene(message);
+		this.jeuServeur.ajoutLabelJeuArene(boule.getjLabel());
 		
 		// afficher le personnage
 		affiche(MARCHE, etape);
+		
+		
 		
 	}
 
@@ -122,7 +138,7 @@ public class Joueur extends Objet implements Global {
 	 * Calcul de la première position aléatoire du joueur (sans chevaucher un autre joueur ou un mur)
 	 */
 	private void premierePosition(Collection lesJoueurs, Collection lesMurs) {
-		jLabel.setBounds(POSX_PAVES,POSY_PAVES,LARGEURPERSO,HAUTEURPERSO);
+		jLabel.setBounds(0,0,LARGEURPERSO,HAUTEURPERSO);
 		do { 
 			posX = (new Random()).nextInt((LARGEUR_ARENE - LARGEURPERSO));
 			posY = (new Random()).nextInt((HAUTEUR_ARENE - HAUTEURPERSO - HAUTEUR_LBLMESSAGE));
@@ -141,8 +157,8 @@ public class Joueur extends Objet implements Global {
 		URL resource = getClass().getClassLoader().getResource(chemin);
 		super.jLabel.setIcon(new ImageIcon(resource));
 		// positionnement et remplissage du message sous le perosnnage
-		this.lblMessage.setBounds(posX-10, posY+HAUTEURPERSO, LARGEURPERSO+10, HAUTEUR_LBLMESSAGE);
-		this.lblMessage.setText(pseudo+" : "+vie);
+		this.message.setBounds(posX-10, posY+HAUTEURPERSO, LARGEURPERSO+10, HAUTEUR_LBLMESSAGE);
+		this.message.setText(pseudo+" : "+vie);
 		// demande d'envoi à tous des modifications d'affichage
 		this.jeuServeur.envoiJeuATous();
 	}
@@ -168,7 +184,11 @@ public class Joueur extends Objet implements Global {
 			break;
 		case KeyEvent.VK_DOWN :
 			posY = deplace(posY,  action, PAS, HAUTEUR_ARENE - HAUTEURPERSO - HAUTEUR_LBLMESSAGE, lesJoueurs, lesMurs) ;
-			break;	
+			break;
+		case KeyEvent.VK_SPACE :
+			if (!this.boule.getjLabel().isVisible()) {
+				this.boule.tireBoule(this, lesMurs);
+			}
 		}
 		this.affiche(MARCHE, this.etape);
 	}
@@ -201,20 +221,24 @@ public class Joueur extends Objet implements Global {
 		return position ;
 	}
 
-
-		
 	
 	
 	/**
 	 * Gain de points de vie après avoir touché un joueur
 	 */
 	public void gainVie() {
+		this.vie += GAIN ;
 	}
 	
 	/**
 	 * Perte de points de vie après avoir été touché 
 	 */
 	public void perteVie() {
+		if (this.vie > 0) {
+			this.vie -= PERTE ;
+		}
+		
+		
 	}
 	
 	/**
@@ -222,7 +246,7 @@ public class Joueur extends Objet implements Global {
 	 * @return true si vie = 0
 	 */
 	public Boolean estMort() {
-		return null;
+		return (this.vie == 0);
 	}
 	
 	/**

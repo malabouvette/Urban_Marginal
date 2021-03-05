@@ -136,6 +136,14 @@ public interface Global {
 	 */
 	int LARGEUR_MUR = 34 ;
 	/**
+	 * hauteur d'une boule
+	 */
+	int HAUTEUR_BOULE = 17 ;
+	/**
+	 * largeur d'une boule
+	 */
+	int LARGEUR_BOULE = 17 ;
+	/**
 	 * hauteur fenêtre Arene (sans le tchat)
 	 */
 	int HAUTEUR_ARENE = 600 ;
@@ -224,9 +232,18 @@ public interface Global {
 	 */
 	int PAS = 10 ;
 	/**
-	 * nombre d'étapes d'état des personnages
+	 * nombre d'étapes de marche des personnages
 	 */
 	Integer NBETAPESMARCHE = 4;
+	/**
+	 * nombre d'étapes de touché des personnages
+	 */
+	Integer NBETAPESTOUCHE = 2;
+	/**
+	 * nombre d'étapes de mort des personnages
+	 */
+	Integer NBETAPESMORT = 2  ;
+	
 	/**
 	 * orientation des joueur pour chemins image perso
 	 */

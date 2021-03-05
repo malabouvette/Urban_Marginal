@@ -34,14 +34,6 @@ public abstract class Objet implements Global {
 	 */
 	protected Integer hauteur;
 	
-	 /** 
-	  * position Y de la fin de l'objet
-	 */
-	// protected Integer posYFin ;
-	/**
-	 * position X de la fin de l'objet
-	 */
-	//protected Integer posXFin ;
 	/**
 	 * @return jLabel
 	 */
@@ -49,6 +41,19 @@ public abstract class Objet implements Global {
 	public JLabel getjLabel() {
 		return jLabel;	
 	}
+	/**
+	 * @return posX
+	 */
+	public int getPosX() {
+		return this.posX ;	
+	}
+	/**
+	 * @return posX
+	 */
+	public int getPosY() {
+		return this.posY ;	
+	}
+	
 
 	
 	
