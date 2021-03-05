@@ -138,11 +138,11 @@ public interface Global {
 	/**
 	 * hauteur fenêtre Arene (sans le tchat)
 	 */
-	int HAUTEUR_ARENE = 550 ;
+	int HAUTEUR_ARENE = 600 ;
 	/**
 	 * largeur arène
 	 */
-	int LARGEUR_ARENE = 740 ;
+	int LARGEUR_ARENE = 800 ;
 	/**
 	 * nombre de murs
 	 */
@@ -166,11 +166,11 @@ public interface Global {
 	/**
 	 * position X début des pavés
 	 */
-	int POSX_PAVES = 25 ;
+	int POSX_PAVES = 0 ;
 	/**
 	 ** position Y début des pavés
 	 */
-	int POSY_PAVES = 30 ;
+	int POSY_PAVES = 0 ;
 	/**
 	 * ordre pour ajouter le label jeu dans l'arene du serveur
 	 */
@@ -215,7 +215,26 @@ public interface Global {
 	 * étoile encadrant nouveau message arrivé
 	 */
 	String ETOILES = "***" ;
-	}	
+	/**
+	 * ordre action
+	 */
+	String ACTION = "action";
+	/**
+	 * taille d'un déplacement de personnage
+	 */
+	int PAS = 10 ;
+	/**
+	 * nombre d'étapes d'état des personnages
+	 */
+	Integer NBETAPESMARCHE = 4;
+	/**
+	 * orientation des joueur pour chemins image perso
+	 */
+	Integer GAUCHE = 0;
+	Integer DROITE = 1;
+	
+}	
+
 
 
 

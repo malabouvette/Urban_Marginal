@@ -139,7 +139,7 @@ public class Controle implements AsyncResponse, Global {
 			leJeu.envoi((Connection)info, frmArene.getJpnJeu());
 			break;
 		case AJOUT_PHRASE :
-			this.frmArene.ajoutChat((String)info);
+			this.frmArene.ajoutTchat((String)info);
 			((JeuServeur)leJeu).envoi(frmArene.getTxtChat());
 			break;
 			
@@ -171,9 +171,12 @@ public class Controle implements AsyncResponse, Global {
 	 * 
 	 */
 	
-	public void evenementArene(String info) {
-		((JeuClient)this.leJeu).envoi(TCHAT+STRINGSEPARE+info);
-
+	public void evenementArene(Object info) {
+		if (info instanceof String) {
+			((JeuClient)this.leJeu).envoi(TCHAT+STRINGSEPARE+info);
+		}else if (info instanceof Integer) {
+			((JeuClient)this.leJeu).envoi(ACTION+STRINGSEPARE+info);
+		}
 	}
 }
 

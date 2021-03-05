@@ -66,9 +66,9 @@ public class Arene extends JFrame implements Global {
 	 *setter panel mur
 	 *@param jpnMurs
 	 */
-	public void setJpnMurs(JPanel info) {
-		this.jpnMurs.add(info);
-		info.repaint();
+	public void setJpnMurs(JPanel jpnMurs) {
+		this.jpnMurs.add(jpnMurs);
+		this.jpnMurs.repaint();
 	}
 		
 	/**
@@ -80,13 +80,14 @@ public class Arene extends JFrame implements Global {
 	}
 	
 	/**
-	 *setter panel mur
+	 *setter panel jeu
 	 *@param jpnMurs
 	 */
-	public void setJpnJeu(JPanel info) {
+	public void setJpnJeu(JPanel jpnJeu) {
 		this.jpnJeu.removeAll();
-		this.jpnJeu.add(info);
-		info.repaint();
+		this.jpnJeu.add(jpnJeu);
+		this.jpnJeu.repaint();
+		this.contentPane.requestFocus();
 	}
 	/**
 	 * getter le contenu du texte du chat
@@ -114,14 +115,14 @@ public class Arene extends JFrame implements Global {
 	 * Ajout Label Jeu
 	 */
 	public void ajoutLabelJeu (JLabel lblJeu) {
-		jpnJeu.add(lblJeu);
-		jpnJeu.repaint();
+		this.jpnJeu.add(lblJeu);
+		this.jpnJeu.repaint();
 	}
 	/**
-	 * ajout de la phrase du chat côté serveur
+	 * ajout de la phrase du chat
 	 */
-	public void ajoutChat(String phrase) {
-		txtChat.append(phrase+"\r\n");
+	public void ajoutTchat(String phrase) {
+		this.txtChat.append(phrase+"\r\n");
 		this.txtChat.setCaretPosition(this.txtChat.getDocument().getLength());
 	}
 	
@@ -134,6 +135,27 @@ public class Arene extends JFrame implements Global {
 				this.controle.evenementArene(this.txtSaisie.getText());
 				this.txtSaisie.setText("");
 			}
+			this.contentPane.requestFocus();
+		}
+	}
+	/**
+	 * Evénement touche pressée sur le panel général
+	 * @param e informations sur la touche
+	 */
+	public void contentPane_KeyPressed(KeyEvent e) {
+		int touche = -1;
+		switch(e.getKeyCode()) {
+		case KeyEvent.VK_LEFT :
+		case KeyEvent.VK_RIGHT :
+		case KeyEvent.VK_UP :
+		case KeyEvent.VK_DOWN :
+		case KeyEvent.VK_SPACE :
+			touche = e.getKeyCode();
+			break;
+		}
+		// si touche correcte, alors envoi de sa valeur
+		if(touche != -1) {
+			this.controle.evenementArene(touche);
 		}
 	}
 	
@@ -141,28 +163,30 @@ public class Arene extends JFrame implements Global {
 	 * Create the frame.
 	 * @param controle instance du controleur
 	 */
-	public Arene(Controle controle, String typeDeJeu) {
+	public Arene(Controle controle, String typeJeu) {
+		this.client = typeJeu.equals(CLIENT);
+	
 		// Dimension de la frame en fonction de son contenu
 		this.getContentPane().setPreferredSize(new Dimension(800, 600 + 25 + 140));
 	    this.pack();
 	    // interdiction de changer la taille
 		this.setResizable(false);
 		
-		if (typeDeJeu == CLIENT) {
-			client = true;
-		}
-		if (typeDeJeu == SERVEUR) {
-			client = false;
-		}
-		
 		setTitle("Arena");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		contentPane = new JPanel();
+		//écoute de touche sur le panel du jeu
+		contentPane.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				contentPane_KeyPressed(e);
+			}
+		});
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		jpnJeu = new JPanel();
-		jpnJeu.setBounds(POSX_PAVES, POSY_PAVES, LARGEUR_ARENE, HAUTEUR_ARENE);
+		jpnJeu.setBounds(POSX_PAVES,POSY_PAVES,LARGEUR_ARENE, HAUTEUR_ARENE);
 		jpnJeu.setLayout(null);
 		contentPane.add(jpnJeu);
 		jpnJeu.setOpaque(false);
@@ -194,6 +218,12 @@ public class Arene extends JFrame implements Global {
 		contentPane.add(jspChat);
 		
 		txtChat = new JTextArea();
+		txtChat.addKeyListener(new KeyAdapter(){
+			@Override
+			public void keyPressed(KeyEvent e) {
+				contentPane_KeyPressed(e);
+			}		
+		});
 		jspChat.setViewportView(txtChat);
 		txtChat.setEditable(false);
 		

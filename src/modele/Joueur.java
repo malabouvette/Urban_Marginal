@@ -1,6 +1,7 @@
 package modele;
 
 import java.util.ArrayList;
+import java.awt.event.KeyEvent;
 import java.awt.Font;
 import java.awt.font.*;
 import java.net.URL;
@@ -80,7 +81,7 @@ public class Joueur extends Objet implements Global {
 		this.jeuServeur = jeuServeur;
 		vie = MAXVIE ;
 		etape = 1 ;
-		orientation = 0;
+		orientation = DROITE;
 		
 	}
 
@@ -89,7 +90,7 @@ public class Joueur extends Objet implements Global {
 	 * @param numPerso numéro du personnage
 	 * @param pseudo pseudo du joueur
 	 */
-	public void initPerso(String pseudo, int numPerso, Collection <Joueur> lesJoueurs, ArrayList <Mur> lesMurs) {
+	public void initPerso(String pseudo, int numPerso, Collection lesJoueurs, Collection lesMurs) {
 		this.pseudo = pseudo;
 		this.numPerso = numPerso;
 		//System.out.println("joueur "+pseudo+" - num perso "+numPerso+" créé");
@@ -120,15 +121,12 @@ public class Joueur extends Objet implements Global {
 	/**
 	 * Calcul de la première position aléatoire du joueur (sans chevaucher un autre joueur ou un mur)
 	 */
-	private void premierePosition(Collection <Joueur> lesJoueurs, Collection <Mur> lesMurs) {
-		jLabel.setBounds(0,0,LARGEURPERSO,HAUTEURPERSO);
+	private void premierePosition(Collection lesJoueurs, Collection lesMurs) {
+		jLabel.setBounds(POSX_PAVES,POSY_PAVES,LARGEURPERSO,HAUTEURPERSO);
 		do { 
 			posX = (new Random()).nextInt((LARGEUR_ARENE - LARGEURPERSO));
-			posY = (new Random()).nextInt((HAUTEUR_ARENE - HAUTEURPERSO + HAUTEUR_LBLMESSAGE));
-		}while (this.toucheJoueur(lesJoueurs) || this.toucheMur(lesMurs)); {	
-		}
-		
-		
+			posY = (new Random()).nextInt((HAUTEUR_ARENE - HAUTEURPERSO - HAUTEUR_LBLMESSAGE));
+		}while (this.toucheCollectionObjets(lesJoueurs) !=null || this.toucheCollectionObjets(lesMurs) != null);			
 	}
 	
 	/**
@@ -150,46 +148,62 @@ public class Joueur extends Objet implements Global {
 	}
 
 	/**
-	 * Gère une action revue et qu'il faut afficher (déplacement, tire de boule...)
+	 * Gère une action reçue et qu'il faut afficher (déplacement, tire de boule...)
+	 * @param action action a exécutée (déplacement ou tir de boule)
+	 * @param lesMurs collection de murs
+	 * @param lesJoueurs collection de joueurs
 	 */
-	public void action() {
-	}
-
-	/**
-	 * Gère le déplacement du personnage
-	 */
-	private void deplace() { 
-	}
-
-	/**
-	 * Contrôle si le joueur touche un des autres joueurs
-	 * @return true si deux joueurs se touchent
-	 */
-	private Boolean toucheJoueur(Collection <Joueur> lesJoueurs) {
-		for (Joueur unJoueur :lesJoueurs){
-			if (!unJoueur.equals(this)){	
-				if (super.toucheObjet(unJoueur)){
-					return true ;
-				}
-			}
-		} 
-		return false;
+	public void action(Integer action, Collection lesJoueurs, Collection lesMurs) {
+		switch(action){
+		case KeyEvent.VK_LEFT :
+			orientation = GAUCHE; 
+			posX = deplace(posX, action, -PAS, LARGEUR_ARENE - LARGEURPERSO, lesJoueurs, lesMurs);
+			break;
+		case KeyEvent.VK_RIGHT :
+			orientation = DROITE; 
+			posX = deplace(posX, action, PAS, LARGEUR_ARENE - LARGEURPERSO, lesJoueurs, lesMurs);
+			break;
+		case KeyEvent.VK_UP :
+			posY = deplace(posY, action, -PAS, HAUTEUR_ARENE - HAUTEURPERSO - HAUTEUR_LBLMESSAGE, lesJoueurs, lesMurs) ;
+			break;
+		case KeyEvent.VK_DOWN :
+			posY = deplace(posY,  action, PAS, HAUTEUR_ARENE - HAUTEURPERSO - HAUTEUR_LBLMESSAGE, lesJoueurs, lesMurs) ;
+			break;	
+		}
+		this.affiche(MARCHE, this.etape);
 	}
 	
 
 	/**
-	* Contrôle si le joueur touche un des murs
-	 * @return true si un joueur touche un mur
+	 * Gère le déplacement du personnage
 	 */
-	private Boolean toucheMur(Collection <Mur> lesMurs) {
-		for (Mur unMur : lesMurs) {
-			if (super.toucheObjet(unMur)){
-				return true;
-			}	
+	private int deplace(int position,//positions de départ
+			int action, //gauche, droite, haut, bas
+			int lepas,// valuer du dép
+			int max,//valeur à ne pas dépasser
+			Collection lesJoueurs,// les autres joueurs pour éviter les collisions
+			Collection lesMurs) { // les murs pour éviter les collisions
+		int ancpos = position ;
+		position += lepas ;
+		position = Math.max(position, 0) ;
+		position = Math.min(position,  max) ;
+		if (action==KeyEvent.VK_LEFT || action==KeyEvent.VK_RIGHT) {
+			posX = position ;
+		}else{
+			posY = position ;
 		}
-		return false;
-	} 
+		// controle s'il y a collision, dans ce cas, le personnage reste sur place
+		if (toucheCollectionObjets(lesJoueurs)!=null || toucheCollectionObjets(lesMurs)!=null) {
+			position = ancpos ;
+		}
+		// passe à l'étape suivante de l'animation de la marche
+		etape = (etape % NBETAPESMARCHE) + 1 ;
+		return position ;
+	}
 
+
+		
+	
 	
 	/**
 	 * Gain de points de vie après avoir touché un joueur
