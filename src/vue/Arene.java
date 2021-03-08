@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 import controleur.Controle;
 import controleur.Global;
 import modele.Objet;
+import outils.son.Son;
 
 /**
  * frame de l'arène du jeu
@@ -51,8 +52,11 @@ public class Arene extends JFrame implements Global {
 	/**
 	 * bolléen pour savoir si il s'agit d'un arène serveur ou client
 	 */
-	private 
-	Boolean client;
+	private Boolean client;
+	/**
+	 * 
+	 */
+	private Son[] lesSons = new Son[TABSON.length];
 	
 	/**
 	 * getter panel mur
@@ -117,6 +121,12 @@ public class Arene extends JFrame implements Global {
 	public void ajoutLabelJeu (JLabel lblJeu) {
 		this.jpnJeu.add(lblJeu);
 		this.jpnJeu.repaint();
+	}
+	 /**
+	  * joue le son du combat selon appel du controleur
+	  */
+	public void joueSon(Integer numSon) {
+		this.lesSons[numSon].play();
 	}
 	/**
 	 * ajout de la phrase du chat
@@ -210,6 +220,7 @@ public class Arene extends JFrame implements Global {
 			txtSaisie.setBounds(0, 600, 800, 25);
 			contentPane.add(txtSaisie);
 			txtSaisie.setColumns(10);
+			
 		}
 		
 		JScrollPane jspChat = new JScrollPane();
@@ -233,8 +244,16 @@ public class Arene extends JFrame implements Global {
 		lblFond.setBounds(0, 0, 800, 600);
 		contentPane.add(lblFond);
 		
+		// gestion du son des combat
+		if (client) {
+			for (int k=0 ; k<TABSON.length ; k++) {
+				lesSons[k] = new Son(getClass().getClassLoader().getResource(TABSON[k])) ;
+			}
+		}
+		
 		// récupération de l'instance de Controle
 		this.controle = controle;
+		
 	}
 
 }

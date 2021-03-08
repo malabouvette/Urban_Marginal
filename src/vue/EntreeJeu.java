@@ -116,6 +116,9 @@ public class EntreeJeu extends JFrame {
 		
 		// récupération de l'instance de Controle
 		this.controle = controle;
+		
+
+		
 	}
 
 }

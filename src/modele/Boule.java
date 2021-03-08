@@ -58,6 +58,8 @@ public class Boule extends Objet implements Global, Runnable{
 	
 	@Override 
 	public void run() {
+		// envoi du son de la boule
+		this.jeuServeur.envoi(FIGHT);
 		this.attaquant.affiche(MARCHE, 1);
 		this.jLabel.setVisible(true);
 		Joueur victime = null;
@@ -67,17 +69,20 @@ public class Boule extends Objet implements Global, Runnable{
 		}else {
 			lePas = -PAS;
 		}
+		// envoi boule
 		do {
 			posX += lePas;
 			this.jLabel.setBounds(posX, posY, LARGEUR_BOULE, HAUTEUR_BOULE);
 			this.jeuServeur.envoiJeuATous();
 			Collection lesJoueurs = this.jeuServeur.getlesJoueur();
-			victime = (Joueur)super.toucheCollectionObjets(lesJoueurs);		
+			victime = (Joueur)super.toucheCollectionObjets(lesJoueurs);
 		} while(posX >= 0 && posX + LARGEUR_BOULE <= LARGEUR_ARENE 
 				&& victime == null
 				&& this.toucheCollectionObjets(lesMurs) == null) ;
 		// verifier si il y a une victime
 		if (victime != null) {
+			// envoie l'information du son à jouer au jeu serveur
+			this.jeuServeur.envoi(HURT);
 			victime.perteVie();
 			attaquant.gainVie();
 			//boucle pour animation du joueur blessé
@@ -86,10 +91,14 @@ public class Boule extends Objet implements Global, Runnable{
 				victime.affiche(TOUCHE, k);
 			}
 			if (victime.estMort()) {
+				// envoie l'information du son à jouer au jeu serveur
+				this.jeuServeur.envoi(DEATH);
 				//boucle pour animation du joueur qui meurt
 				for (int k = 1;  k <= NBETAPESMORT; k++) {
 					this.pause(80, 0);
 					victime.affiche(MORT, k);
+					
+					
 				}
 			}else {
 				victime.affiche(MARCHE, 1);	

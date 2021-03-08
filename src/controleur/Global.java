@@ -3,6 +3,9 @@
  */
 package controleur;
 
+import java.awt.List;
+import java.util.ArrayList;
+
 /**
  * Global contient les constantes du programme
  * @author emds
@@ -37,8 +40,7 @@ public interface Global {
 	/** 
 	 * Début du nom des images des personnages
 	 */
-	String PERSO = "perso";
-	/**
+	String PERSO = "perso";			
 	/**
 	 * Chemin du dossier des images des personnages
 	 */
@@ -67,6 +69,63 @@ public interface Global {
 	 * Chemin de l'image du mur
 	 */
 	String MUR = CHEMINMURS+"mur.gif";
+	/**
+	 * chemin son
+	 */
+	String CHEMINSON = "sons"+CHEMINSEPARATOR;	
+	/**
+	 * extension fichier son
+	 */
+	String EXTFICHIERSON = ".wav" ;
+	/**
+	 * chemin son bienevenue
+	 */
+	String SONBIENVENUE = CHEMINSON+"welcome"+EXTFICHIERSON ;
+	/**
+	 * chemin son précédent
+	 */
+	String SONPRECEDENT = CHEMINSON+"precedent"+EXTFICHIERSON ;
+	/**
+	 * chemin son précédent
+	 */
+	String SONSUIVANT = CHEMINSON+"suivant"+EXTFICHIERSON ;
+	/**
+	 * chemin son go
+	 */
+	String SONGO= CHEMINSON+"go"+EXTFICHIERSON ;
+	/**
+	 * chemin son boule lancée
+	 */
+	String SONBOULE = CHEMINSON+"fight"+EXTFICHIERSON ;
+	/**
+	 * chemin son joueur blessé
+	 */
+	String SONBLESSE = CHEMINSON+"hurt"+EXTFICHIERSON ;
+	/**
+	 * chemin son joueur mort
+	 */
+	String SONMORT = CHEMINSON+"death"+EXTFICHIERSON ;
+	/**
+	 * tableau des sons de la vue arene
+	 */
+	String[] TABSON =  {SONBOULE, SONBLESSE, SONMORT} ;
+	/**
+	 * numéro correspondant au son FIGHT
+	 */
+	int FIGHT = 0;
+	/**
+	 * numéro correspondant au son HURT
+	 */
+	int HURT = 1;
+	/**
+	 * numéro correspondant au son DEATH
+	 */
+	int DEATH = 2;
+	/**
+	 * orde de jouer un son du combat
+	 */
+	String JOUE_SON = "joue un son";
+
 	/**
 	 * état marche du personnage
 	 */
